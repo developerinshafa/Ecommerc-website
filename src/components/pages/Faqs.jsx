@@ -1,4 +1,4 @@
-export default function Faqs(){
+export default function FAQs(){
     return(
         <>
         <div>

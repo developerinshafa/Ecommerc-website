@@ -6,13 +6,12 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import HomePage from './components/pages/HomePage'
 import Products from './components/pages/Products'
 import Footer from './components/Footer'
-import Faqs from './components/pages/FAQs'
 import ContactPage from './components/pages/ContactPage'
+import FAQs from './components/pages/FAQs'
 
 
 function App() {
  
-
   return (
     <>
     <BrowserRouter>
@@ -21,7 +20,7 @@ function App() {
       <Routes>
         <Route path='/' element={<HomePage/>}/>
         <Route path='/products' element={<Products/>}/>
-        <Route path='/faqs' element={<Faqs/>}/>
+        <Route path='/faqs' element={<FAQs/>}/>
         <Route path='/contact' element={<ContactPage/>}/>
       </Routes>
       <Footer/>
