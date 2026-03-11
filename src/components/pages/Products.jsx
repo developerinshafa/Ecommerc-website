@@ -1,6 +1,13 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
-export default function Products() {
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
+export default function Products({ cart, setCart }) {
+  const query = useQuery();
+  const category = query.get("category");
 
   const [products, setProducts] = useState([
     {
@@ -8,129 +15,129 @@ export default function Products() {
       name: "Green Rayon Saree",
       price: 4500,
       qty: 1,
-      img: "/img/green saree.jpeg"
+      img: "/img/green saree.jpeg",
     },
     {
       id: 2,
       name: "Pink Rayon Saree",
       price: 4500,
       qty: 1,
-      img: "/img/pink saree.jpeg"
+      img: "/img/pink saree.jpeg",
     },
     {
       id: 3,
       name: "couple combo ",
       price: 12000,
       qty: 1,
-      img: "/img/couple hanloom_n.jpg"
+      img: "/img/couple hanloom_n.jpg",
     },
     {
       id: 4,
       name: "Black Rayon Cotton saree",
       price: 5000,
       qty: 1,
-      img: "/img/black saree.jpeg"
+      img: "/img/black saree.jpeg",
     },
     {
-      id:5,
+      id: 5,
       name: "dark blue sare",
       price: 5000,
       qty: 1,
-      img: "/img/dark blue saree.jpeg"
+      img: "/img/dark blue saree.jpeg",
     },
     {
-      id:6,
+      id: 6,
       name: "cotton top",
       price: 2500,
       qty: 1,
-      img: "https://www.eshandlooms.com/wp-content/uploads/2021/02/EL262.jpg"
+      img: "https://www.eshandlooms.com/wp-content/uploads/2021/02/EL262.jpg",
     },
     {
-      id:7,
+      id: 7,
       name: "cotton Sarong combo",
       price: 7899,
       qty: 1,
-      img: "https://dynamic-cdn.zenegal.store/fit-in/700x1050/products/52718/mens-handloom-sarong-16800891215573.jpg" 
+      img: "https://dynamic-cdn.zenegal.store/fit-in/700x1050/products/52718/mens-handloom-sarong-16800891215573.jpg",
     },
     {
-      id:6,
+      id: 8,
       name: "Reyon Sarong Combo",
       price: 8000,
       qty: 1,
-      img: "https://www.ownacraft.com/wp-content/uploads/2024/04/CS21312-1.webp"
-    }
-    
-
+      img: "https://www.ownacraft.com/wp-content/uploads/2024/04/CS21312-1.webp",
+    },
   ]);
+  //search state
+  const [searchTerm, setSearchTerm] = useState("");
 
-  // increase quantity
-  const increaseQty = (id) => {
-    setProducts(products.map((p) =>
-      p.id === id ? { ...p, qty: p.qty + 1 } : p
-    ));
-  };
+  const filteredProducts = products.filter((product) =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
 
-  // decrease quantity
-  const decreaseQty = (id) => {
-    setProducts(products.map((p) =>
-      p.id === id && p.qty > 1 ? { ...p, qty: p.qty - 1 } : p
-    ));
+  //   add to cart function
+  const addToCart = (product) => {
+    console.log("Adding to cart:", product);
+    const exist = cart.find((x) => x.id === product.id);
+
+    if (exist) {
+      setCart(
+        cart.map((x) => (x.id === product.id ? { ...x, qty: x.qty + 1 } : x)),
+      );
+    } else {
+      setCart([...cart, { ...product, qty: 1 }]);
+    }
   };
 
   return (
     <>
-      <div className="p-10">
-        <h1 className="text-4xl px-5 font-bold">Featured Products</h1>
+      <div className="px-10 ">
+        <input
+          type="text"
+          placeholder="Search products..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="border border-gray-300 p-2 px-4 rounded w-full my-5"
+        />
       </div>
-
-      <div className="grid grid-cols-4 gap-5 px-10 pb-10">
-
-        {products.map((item) => {
-
-          const total = item.price * item.qty;
-
-          return (
-            <div key={item.id} className="bg-gray-100 pb-5 grid text-center hover:border-orange-500 hover:shadow-xl shadow-orange-500/50 ...">
-
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 px-10 pb-10">
+        {filteredProducts.length > 0 ? (
+          filteredProducts.map((item) => (
+            <div
+              key={item.id}
+              className="bg-gray-100 p-4 text-center hover:border-orange-500 hover:shadow-xl"
+            >
               <img
                 src={item.img}
+                className="w-full object-cover h-64 mb-2"
                 alt={item.name}
-                className="p-4 object-cover transition-transform duration-300 hover:scale-110"
               />
-
-              <h2 className="text-xl font-semibold hover:text-orange-500">
-                {item.name}
-              </h2>
-
-              <p className="font-bold">RS: {total}</p>
-
-              {/* Quantity */}
-              <div className="flex justify-center gap-3 mt-3">
-
-                <button
-                  onClick={() => decreaseQty(item.id)}
-                  className="bg-gray-300 px-3"
-                >
-                  -
-                </button>
-
-                <span className="font-bold">{item.qty}</span>
-
-                <button
-                  onClick={() => increaseQty(item.id)}
-                  className="bg-gray-300 px-3"
-                >
-                  +
-                </button>
-
-              </div>
-
+              <h2 className="text-xl font-semibold">{item.name}</h2>
+              <p className="font-bold">Rs: {item.price}</p>
+              <button
+                onClick={() => {
+                  const exist = cart.find((x) => x.id === item.id);
+                  if (exist) {
+                    setCart(
+                      cart.map((x) =>
+                        x.id === item.id ? { ...x, qty: x.qty + 1 } : x,
+                      ),
+                    );
+                  } else {
+                    setCart([...cart, { ...item, qty: 1 }]);
+                  }
+                }}
+                className="bg-orange-400 px-4 py-2 mt-2 rounded"
+              >
+                Add To Cart
+              </button>
             </div>
-          );
-        })}
-
+          ))
+        ) : (
+          <p className="text-center text-2xl font-bold col-span-4 mt-10">
+            Item not found
+          </p>
+        )}
       </div>
     </>
   );
 }
-
