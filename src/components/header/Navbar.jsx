@@ -12,7 +12,7 @@ export default function Navbar({ cart }) {
           <div className="flex items-center justify-between px-5">
             <div className="">
               <img
-                src="public/logo/Sri_Hanloom.png"
+                src="/logo/Sri_Hanloom.png"
                 alt="Logo"
                 className="w-50 p-2"
               />
