@@ -12,7 +12,7 @@ export default function Navbar({ cart }) {
           <div className="flex items-center justify-between px-5">
             <div className="">
               <img
-                src="public/img/Sri_Hanloom.png"
+                src="public/logo/Sri_Hanloom.png"
                 alt="Logo"
                 className="w-50 p-2"
               />
@@ -32,7 +32,7 @@ export default function Navbar({ cart }) {
                 </NavLink>
               </div>
 
-              <div className="pt-12 font-bold ">
+              <div className="pt-12 font-bold pb-10 ">
                 <button className="bg-gray-300 px-4 p-2">Register</button>
                 <button className="bg-black text-white px-4 p-2 ">Login</button>
               </div>

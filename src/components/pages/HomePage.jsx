@@ -33,7 +33,7 @@ export default function HomePage() {
         </p>
       </div>
 
-      {/* details   */}
+      {/* Services details   */}
       <div className="py-5">
         <div className="flex gap-5 p-5">
           <div className="flex items-center mb-4 w-full bg-gray-200 p-10 gap-5">
@@ -57,7 +57,6 @@ export default function HomePage() {
       <hr />
 
       {/* Products section */}
-      {/* <Products/> */}
       <div className="py-10 px-5">
         <h1 className="text-4xl px-5 font-bold">Featured Products</h1>
       </div>

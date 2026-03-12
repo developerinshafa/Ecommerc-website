@@ -6,7 +6,7 @@ export default function Cart({ cart, setCart }) {
     ));
   };
 
-  // Decrease quantity
+  // - quantity
   const decreaseQty = (id) => {
     setCart(cart.map(item => 
       item.id === id && item.qty > 1 ? { ...item, qty: item.qty - 1 } : item
